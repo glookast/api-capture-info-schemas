@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:xs="http://www.w3.org/2001/XMLSchema"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:tns="http://capture-info.api.glookast.com"
+             xmlns:base="http://base.commons.glookast.com"
+             xmlns:time="http://timecode.commons.glookast.com"
+             name="CaptureInfo"
+             targetNamespace="http://capture-info.api.glookast.com">
+    <types>
+        <xs:schema xmlns:tns="http://capture-info.api.glookast.com"
+                   xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                   xmlns:base="http://base.commons.glookast.com"
+                   xmlns:time="http://timecode.commons.glookast.com"
+                   xmlns:capt="http://capture-info.commons.glookast.com"
+                   version="1.0"
+                   targetNamespace="http://capture-info.api.glookast.com">
+            <xs:import namespace="http://base.commons.glookast.com" schemaLocation="../../commons/base/base.xsd"/>
+            <xs:import namespace="http://timecode.commons.glookast.com"
+                       schemaLocation="../../commons/timecode/timecode.xsd"/>
+            <xs:import namespace="http://capture-info.commons.glookast.com"
+                       schemaLocation="../../commons/capture-info/capture-info.xsd"/>
+
+            <!-- request wrapper types -->
+            <xs:complexType name="RequestVoid"/>
+
+            <xs:complexType name="RequestTransferJobId">
+                <xs:sequence>
+                    <xs:element name="transferJobId" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="RequestCaptureJobId">
+                <xs:sequence>
+                    <xs:element name="captureJobId" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="CaptureInfoExceptionDetails">
+                <xs:sequence>
+                    <xs:element name="errorCode" type="xs:int" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="description" type="xs:string" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="detail" type="xs:string" minOccurs="0" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:complexType>
+
+
+            <!-- request elements -->
+            <!-- SignalFormat -->
+            <xs:element name="getCurrentSignalFormat" type="tns:RequestVoid"/>
+            <xs:element name="getPossibleSignalFormats" type="tns:RequestVoid"/>
+            <xs:element name="hasSignal" type="tns:RequestVoid"/>
+
+            <!-- Buffer Info -->
+            <xs:element name="getAvailableBufferSpace" type="tns:RequestVoid"/>
+
+            <!-- Timecode Info -->
+            <xs:element name="getCurrentTimecodes" type="tns:RequestVoid"/>
+
+            <!-- Transfer Job -->
+            <xs:element name="getTransferJobs" type="tns:RequestVoid"/>
+            <xs:element name="getTransferJobById" type="tns:RequestTransferJobId"/>
+            <xs:element name="getTransferJobsByCaptureJobId" type="tns:RequestCaptureJobId"/>
+            <xs:element name="startTransferJob" type="tns:RequestTransferJobId"/>
+
+            <!-- exceptions -->
+            <xs:element name="captureInfoException" type="tns:CaptureInfoExceptionDetails"/>
+
+
+            <!-- response wrapper types -->
+            <xs:complexType name="ResponseLong">
+                <xs:sequence>
+                    <xs:element name="return" type="xs:long" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="ResponseSignalFormat">
+                <xs:sequence>
+                    <xs:element name="return" type="capt:SignalFormat" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="ResponseListSignalFormat">
+                <xs:sequence>
+                    <xs:element name="return" type="capt:SignalFormat" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="ResponseTimecodeCollection">
+                <xs:sequence>
+                    <xs:element name="return" type="capt:TimecodeCollection" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="ResponseListTransferJob">
+                <xs:sequence>
+                    <xs:element name="return" type="capt:TransferJob" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="ResponseTransferJob">
+                <xs:sequence>
+                    <xs:element name="return" type="capt:TransferJob" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="ResponseBoolean">
+                <xs:sequence>
+                    <xs:element name="return" type="xs:boolean" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="ResponseVoid">
+            </xs:complexType>
+
+
+            <!-- response elements -->
+            <xs:element name="responseLong" type="tns:ResponseLong"/>
+            <xs:element name="responseSignalFormat" type="tns:ResponseSignalFormat"/>
+            <xs:element name="responseListSignalFormat" type="tns:ResponseListSignalFormat"/>
+            <xs:element name="responseTimecodeCollection" type="tns:ResponseTimecodeCollection"/>
+            <xs:element name="responseListTransferJob" type="tns:ResponseListTransferJob"/>
+            <xs:element name="responseTransferJob" type="tns:ResponseTransferJob"/>
+            <xs:element name="responseBoolean" type="tns:ResponseBoolean"/>
+            <xs:element name="responseVoid" type="tns:ResponseVoid"/>
+
+        </xs:schema>
+    </types>
+
+    <!-- response messages -->
+    <message name="responseLong">
+        <part name="parameters" element="tns:responseLong"/>
+    </message>
+    <message name="responseSignalFormat">
+        <part name="parameters" element="tns:responseSignalFormat"/>
+    </message>
+    <message name="responseListSignalFormat">
+        <part name="parameters" element="tns:responseListSignalFormat"/>
+    </message>
+    <message name="responseTimecodeCollection">
+        <part name="parameters" element="tns:responseTimecodeCollection"/>
+    </message>
+    <message name="responseListTransferJob">
+        <part name="parameters" element="tns:responseListTransferJob"/>
+    </message>
+    <message name="responseTransferJob">
+        <part name="parameters" element="tns:responseTransferJob"/>
+    </message>
+    <message name="responseBoolean">
+        <part name="parameters" element="tns:responseBoolean"/>
+    </message>
+    <message name="responseVoid">
+        <part name="parameters" element="tns:responseVoid"/>
+    </message>
+
+    <!-- request messages -->
+    <message name="getCurrentSignalFormat">
+        <part name="parameters" element="tns:getCurrentSignalFormat"/>
+    </message>
+    <message name="getPossibleSignalFormats">
+        <part name="parameters" element="tns:getPossibleSignalFormats"/>
+    </message>
+    <message name="hasSignal">
+        <part name="parameters" element="tns:hasSignal"/>
+    </message>
+    <message name="getAvailableBufferSpace">
+        <part name="parameters" element="tns:getAvailableBufferSpace"/>
+    </message>
+    <message name="getCurrentTimecodes">
+        <part name="parameters" element="tns:getCurrentTimecodes"/>
+    </message>
+    <message name="getTransferJobs">
+        <part name="parameters" element="tns:getTransferJobs"/>
+    </message>
+    <message name="getTransferJobById">
+        <part name="parameters" element="tns:getTransferJobById"/>
+    </message>
+    <message name="getTransferJobsByCaptureJobId">
+        <part name="parameters" element="tns:getTransferJobsByCaptureJobId"/>
+    </message>
+    <message name="startTransferJob">
+        <part name="parameters" element="tns:startTransferJob"/>
+    </message>
+
+    <message name="captureInfoException">
+        <part name="fault" element="tns:captureInfoException"/>
+    </message>
+
+    <portType name="CaptureInfoPort">
+        <operation name="getCurrentSignalFormat">
+            <input message="tns:getCurrentSignalFormat"/>
+            <output message="tns:responseSignalFormat"/>
+            <fault name="captureInfoException" message="tns:captureInfoException"/>
+        </operation>
+        <operation name="getPossibleSignalFormats">
+            <input message="tns:getPossibleSignalFormats"/>
+            <output message="tns:responseListSignalFormat"/>
+            <fault name="captureInfoException" message="tns:captureInfoException"/>
+        </operation>
+        <operation name="hasSignal">
+            <input message="tns:hasSignal"/>
+            <output message="tns:responseBoolean"/>
+            <fault name="captureInfoException" message="tns:captureInfoException"/>
+        </operation>
+        <operation name="getAvailableBufferSpace">
+            <input message="tns:getAvailableBufferSpace"/>
+            <output message="tns:responseLong"/>
+            <fault name="captureInfoException" message="tns:captureInfoException"/>
+        </operation>
+        <operation name="getCurrentTimecodes">
+            <input message="tns:getCurrentTimecodes"/>
+            <output message="tns:responseTimecodeCollection"/>
+            <fault name="captureInfoException" message="tns:captureInfoException"/>
+        </operation>
+        <operation name="getTransferJobs">
+            <input message="tns:getTransferJobs"/>
+            <output message="tns:responseListTransferJob"/>
+            <fault name="captureInfoException" message="tns:captureInfoException"/>
+        </operation>
+        <operation name="getTransferJobById">
+            <input message="tns:getTransferJobById"/>
+            <output message="tns:responseTransferJob"/>
+            <fault name="captureInfoException" message="tns:captureInfoException"/>
+        </operation>
+        <operation name="getTransferJobsByCaptureJobId">
+            <input message="tns:getTransferJobsByCaptureJobId"/>
+            <output message="tns:responseListTransferJob"/>
+            <fault name="captureInfoException" message="tns:captureInfoException"/>
+        </operation>
+        <operation name="startTransferJob">
+            <input message="tns:startTransferJob"/>
+            <output message="tns:responseVoid"/>
+            <fault name="captureInfoException" message="tns:captureInfoException"/>
+        </operation>
+
+    </portType>
+    <binding name="CaptureInfoBinding" type="tns:CaptureInfoPort">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <operation name="getCurrentSignalFormat">
+            <soap:operation soapAction="http://capture-info.api.glookast.com/getCurrentSignalFormat"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="captureInfoException">
+                <soap:fault name="captureInfoException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="getPossibleSignalFormats">
+            <soap:operation soapAction="http://capture-info.api.glookast.com/getPossibleSignalFormats"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="captureInfoException">
+                <soap:fault name="captureInfoException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="hasSignal">
+            <soap:operation soapAction="http://capture-info.api.glookast.com/hasSignal"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="captureInfoException">
+                <soap:fault name="captureInfoException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="getAvailableBufferSpace">
+            <soap:operation soapAction="http://capture-info.api.glookast.com/getAvailableBufferSpace"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="captureInfoException">
+                <soap:fault name="captureInfoException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="getCurrentTimecodes">
+            <soap:operation soapAction="http://capture-info.api.glookast.com/getCurrentTimecodes"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="captureInfoException">
+                <soap:fault name="captureInfoException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="getTransferJobs">
+            <soap:operation soapAction="http://capture-info.api.glookast.com/getTransferJobs"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="captureInfoException">
+                <soap:fault name="captureInfoException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="getTransferJobById">
+            <soap:operation soapAction="http://capture-info.api.glookast.com/getTransferJobById"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="captureInfoException">
+                <soap:fault name="captureInfoException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="getTransferJobsByCaptureJobId">
+            <soap:operation soapAction="http://capture-info.api.glookast.com/getTransferJobsByCaptureJobId"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="captureInfoException">
+                <soap:fault name="captureInfoException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="startTransferJob">
+            <soap:operation soapAction="http://capture-info.api.glookast.com/startTransferJob"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="captureInfoException">
+                <soap:fault name="captureInfoException" use="literal"/>
+            </fault>
+        </operation>
+    </binding>
+    <service name="CaptureInfoService">
+        <port name="CaptureInfoPort" binding="tns:CaptureInfoBinding">
+            <soap:address location="http://host/path/CaptureInfoPort"/>
+        </port>
+    </service>
+</definitions>
