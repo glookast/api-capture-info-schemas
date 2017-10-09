@@ -30,9 +30,29 @@
                 </xs:sequence>
             </xs:complexType>
 
+            <xs:complexType name="RequestTemplateId">
+                <xs:sequence>
+                    <xs:element name="templateId" type="base:UUID" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:complexType>
+
             <xs:complexType name="RequestCaptureJobId">
                 <xs:sequence>
                     <xs:element name="captureJobId" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="RequestSetCaptureJobClipName">
+                <xs:sequence>
+                    <xs:element name="captureJobId" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="clipName" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="RequestSetCaptureJobMetadata">
+                <xs:sequence>
+                    <xs:element name="captureJobId" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="metadataList" type="base:PropertyList" minOccurs="1" maxOccurs="1"/>
                 </xs:sequence>
             </xs:complexType>
 
@@ -50,9 +70,11 @@
             <xs:element name="getCurrentSignalFormat" type="tns:RequestVoid"/>
             <xs:element name="getPossibleSignalFormats" type="tns:RequestVoid"/>
             <xs:element name="hasSignal" type="tns:RequestVoid"/>
+            <xs:element name="getReferenceSignalStatus" type="tns:RequestVoid"/>
 
             <!-- Buffer Info -->
             <xs:element name="getAvailableBufferSpace" type="tns:RequestVoid"/>
+            <xs:element name="getAvailableBufferTime" type="tns:RequestTemplateId"/>
 
             <!-- Timecode Info -->
             <xs:element name="getCurrentTimecodes" type="tns:RequestVoid"/>
@@ -62,6 +84,10 @@
             <xs:element name="getTransferJobById" type="tns:RequestTransferJobId"/>
             <xs:element name="getTransferJobsByCaptureJobId" type="tns:RequestCaptureJobId"/>
             <xs:element name="startTransferJob" type="tns:RequestTransferJobId"/>
+            <xs:element name="getCaptureJobClipName" type="tns:RequestCaptureJobId"/>
+            <xs:element name="setCaptureJobClipName" type="tns:RequestSetCaptureJobClipName"/>
+            <xs:element name="setCaptureJobMetadata" type="tns:RequestSetCaptureJobMetadata"/>
+            <xs:element name="getCaptureJobMetadata" type="tns:RequestCaptureJobId"/>
 
             <!-- exceptions -->
             <xs:element name="captureInfoException" type="tns:CaptureInfoExceptionDetails"/>
@@ -113,6 +139,30 @@
             <xs:complexType name="ResponseVoid">
             </xs:complexType>
 
+            <xs:complexType name="ResponsePropertyList">
+                <xs:sequence>
+                    <xs:element name="return" type="base:PropertyList" minOccurs="1" maxOccurs="1" />
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="ResponseString">
+                <xs:sequence>
+                    <xs:element name="return" type="xs:string" minOccurs="1" maxOccurs="1" />
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="ResponseTimecodeDuration">
+                <xs:sequence>
+                    <xs:element name="return" type="time:TimecodeDuration" minOccurs="1" maxOccurs="1" />
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="ResponseReferenceSignalStatus">
+                <xs:sequence>
+                    <xs:element name="return" type="capt:SignalReferenceStatus" minOccurs="1" maxOccurs="1" />
+                </xs:sequence>
+            </xs:complexType>
+
 
             <!-- response elements -->
             <xs:element name="responseLong" type="tns:ResponseLong"/>
@@ -123,6 +173,10 @@
             <xs:element name="responseTransferJob" type="tns:ResponseTransferJob"/>
             <xs:element name="responseBoolean" type="tns:ResponseBoolean"/>
             <xs:element name="responseVoid" type="tns:ResponseVoid"/>
+            <xs:element name="responsePropertyList" type="tns:ResponsePropertyList"/>
+            <xs:element name="responseString" type="tns:ResponseString"/>
+            <xs:element name="responseTimecodeDuration" type="tns:ResponseTimecodeDuration"/>
+            <xs:element name="responseReferenceSignalStatus" type="tns:ResponseReferenceSignalStatus"/>
 
         </xs:schema>
     </types>
@@ -152,6 +206,18 @@
     <message name="responseVoid">
         <part name="parameters" element="tns:responseVoid"/>
     </message>
+    <message name="responsePropertyList">
+        <part name="parameters" element="tns:responsePropertyList"/>
+    </message>
+    <message name="responseString">
+        <part name="parameters" element="tns:responseString"/>
+    </message>
+    <message name="responseTimecodeDuration">
+        <part name="parameters" element="tns:responseTimecodeDuration"/>
+    </message>
+    <message name="responseReferenceSignalStatus">
+        <part name="parameters" element="tns:responseReferenceSignalStatus"/>
+    </message>
 
     <!-- request messages -->
     <message name="getCurrentSignalFormat">
@@ -165,6 +231,9 @@
     </message>
     <message name="getAvailableBufferSpace">
         <part name="parameters" element="tns:getAvailableBufferSpace"/>
+    </message>
+    <message name="getAvailableBufferTime">
+        <part name="parameters" element="tns:getAvailableBufferTime"/>
     </message>
     <message name="getCurrentTimecodes">
         <part name="parameters" element="tns:getCurrentTimecodes"/>
@@ -180,6 +249,21 @@
     </message>
     <message name="startTransferJob">
         <part name="parameters" element="tns:startTransferJob"/>
+    </message>
+    <message name="getCaptureJobClipName">
+        <part name="parameters" element="tns:getCaptureJobClipName"/>
+    </message>
+    <message name="setCaptureJobClipName">
+        <part name="parameters" element="tns:setCaptureJobClipName"/>
+    </message>
+    <message name="setCaptureJobMetadata">
+        <part name="parameters" element="tns:setCaptureJobMetadata"/>
+    </message>
+    <message name="getCaptureJobMetadata">
+        <part name="parameters" element="tns:getCaptureJobMetadata"/>
+    </message>
+    <message name="getReferenceSignalStatus">
+        <part name="parameters" element="tns:getReferenceSignalStatus"/>
     </message>
 
     <message name="captureInfoException">
@@ -207,6 +291,11 @@
             <output message="tns:responseLong"/>
             <fault name="captureInfoException" message="tns:captureInfoException"/>
         </operation>
+        <operation name="getAvailableBufferTime">
+            <input message="tns:getAvailableBufferTime"/>
+            <output message="tns:responseTimecodeDuration"/>
+            <fault name="captureInfoException" message="tns:captureInfoException"/>
+        </operation>
         <operation name="getCurrentTimecodes">
             <input message="tns:getCurrentTimecodes"/>
             <output message="tns:responseTimecodeCollection"/>
@@ -230,6 +319,31 @@
         <operation name="startTransferJob">
             <input message="tns:startTransferJob"/>
             <output message="tns:responseVoid"/>
+            <fault name="captureInfoException" message="tns:captureInfoException"/>
+        </operation>
+        <operation name="getCaptureJobClipName">
+            <input message="tns:getCaptureJobClipName"/>
+            <output message="tns:responseString"/>
+            <fault name="captureInfoException" message="tns:captureInfoException"/>
+        </operation>
+        <operation name="setCaptureJobClipName">
+            <input message="tns:setCaptureJobClipName"/>
+            <output message="tns:responseVoid"/>
+            <fault name="captureInfoException" message="tns:captureInfoException"/>
+        </operation>
+        <operation name="setCaptureJobMetadata">
+            <input message="tns:setCaptureJobMetadata"/>
+            <output message="tns:responsePropertyList"/>
+            <fault name="captureInfoException" message="tns:captureInfoException"/>
+        </operation>
+        <operation name="getCaptureJobMetadata">
+            <input message="tns:getCaptureJobMetadata"/>
+            <output message="tns:responsePropertyList"/>
+            <fault name="captureInfoException" message="tns:captureInfoException"/>
+        </operation>
+        <operation name="getReferenceSignalStatus">
+            <input message="tns:getReferenceSignalStatus"/>
+            <output message="tns:responseReferenceSignalStatus"/>
             <fault name="captureInfoException" message="tns:captureInfoException"/>
         </operation>
 
@@ -274,6 +388,18 @@
         </operation>
         <operation name="getAvailableBufferSpace">
             <soap:operation soapAction="http://capture-info.api.glookast.com/getAvailableBufferSpace"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="captureInfoException">
+                <soap:fault name="captureInfoException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="getAvailableBufferTime">
+            <soap:operation soapAction="http://capture-info.api.glookast.com/getAvailableBufferTime"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -334,6 +460,66 @@
         </operation>
         <operation name="startTransferJob">
             <soap:operation soapAction="http://capture-info.api.glookast.com/startTransferJob"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="captureInfoException">
+                <soap:fault name="captureInfoException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="getCaptureJobClipName">
+            <soap:operation soapAction="http://capture-info.api.glookast.com/getCaptureJobClipName"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="captureInfoException">
+                <soap:fault name="captureInfoException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="setCaptureJobClipName">
+            <soap:operation soapAction="http://capture-info.api.glookast.com/setCaptureJobClipName"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="captureInfoException">
+                <soap:fault name="captureInfoException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="setCaptureJobMetadata">
+            <soap:operation soapAction="http://capture-info.api.glookast.com/setCaptureJobMetadata"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="captureInfoException">
+                <soap:fault name="captureInfoException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="getCaptureJobMetadata">
+            <soap:operation soapAction="http://capture-info.api.glookast.com/getCaptureJobMetadata"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="captureInfoException">
+                <soap:fault name="captureInfoException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="getReferenceSignalStatus">
+            <soap:operation soapAction="http://capture-info.api.glookast.com/getReferenceSignalStatus"/>
             <input>
                 <soap:body use="literal"/>
             </input>
