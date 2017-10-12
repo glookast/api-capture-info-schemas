@@ -75,6 +75,8 @@
             <!-- Buffer Info -->
             <xs:element name="getAvailableBufferSpace" type="tns:RequestVoid"/>
             <xs:element name="getAvailableBufferTime" type="tns:RequestTemplateId"/>
+            <xs:element name="getTotalBufferSpace" type="tns:RequestVoid"/>
+            <xs:element name="getTotalBufferTime" type="tns:RequestTemplateId"/>
 
             <!-- Timecode Info -->
             <xs:element name="getCurrentTimecodes" type="tns:RequestVoid"/>
@@ -235,6 +237,12 @@
     <message name="getAvailableBufferTime">
         <part name="parameters" element="tns:getAvailableBufferTime"/>
     </message>
+    <message name="getTotalBufferSpace">
+        <part name="parameters" element="tns:getTotalBufferSpace"/>
+    </message>
+    <message name="getTotalBufferTime">
+        <part name="parameters" element="tns:getTotalBufferTime"/>
+    </message>
     <message name="getCurrentTimecodes">
         <part name="parameters" element="tns:getCurrentTimecodes"/>
     </message>
@@ -293,6 +301,16 @@
         </operation>
         <operation name="getAvailableBufferTime">
             <input message="tns:getAvailableBufferTime"/>
+            <output message="tns:responseTimecodeDuration"/>
+            <fault name="captureInfoException" message="tns:captureInfoException"/>
+        </operation>
+        <operation name="getTotalBufferSpace">
+            <input message="tns:getTotalBufferSpace"/>
+            <output message="tns:responseLong"/>
+            <fault name="captureInfoException" message="tns:captureInfoException"/>
+        </operation>
+        <operation name="getTotalBufferTime">
+            <input message="tns:getTotalBufferTime"/>
             <output message="tns:responseTimecodeDuration"/>
             <fault name="captureInfoException" message="tns:captureInfoException"/>
         </operation>
@@ -400,6 +418,30 @@
         </operation>
         <operation name="getAvailableBufferTime">
             <soap:operation soapAction="http://capture-info.api.glookast.com/getAvailableBufferTime"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="captureInfoException">
+                <soap:fault name="captureInfoException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="getTotalBufferSpace">
+            <soap:operation soapAction="http://capture-info.api.glookast.com/getTotalBufferSpace"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="captureInfoException">
+                <soap:fault name="captureInfoException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="getTotalBufferTime">
+            <soap:operation soapAction="http://capture-info.api.glookast.com/getTotalBufferTime"/>
             <input>
                 <soap:body use="literal"/>
             </input>
