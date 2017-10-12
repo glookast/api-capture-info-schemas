@@ -1,3 +1,12 @@
 /build
 /.gradle
 /generated
+/.idea/api-capture-info-schemas.iml
+/.idea/compiler.xml
+/.idea/gradle.xml
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/modules/api-capture-info-schemas_main.iml
+/.idea/modules/api-capture-info-schemas_test.iml
+/.idea/vcs.xml
+/.idea/workspace.xml
