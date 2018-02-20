@@ -140,7 +140,7 @@
 
             <xs:complexType name="ResponseTimecodeCollection">
                 <xs:sequence>
-                    <xs:element name="return" type="capt:TimecodeCollection" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="return" type="time:TimecodeCollection" minOccurs="1" maxOccurs="1"/>
                 </xs:sequence>
             </xs:complexType>
 
@@ -170,7 +170,7 @@
 
             <xs:complexType name="ResponseReferenceSignalStatus">
                 <xs:sequence>
-                    <xs:element name="return" type="capt:SignalReferenceStatus" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="return" type="capt:ReferenceSignalStatus" minOccurs="1" maxOccurs="1"/>
                 </xs:sequence>
             </xs:complexType>
 
