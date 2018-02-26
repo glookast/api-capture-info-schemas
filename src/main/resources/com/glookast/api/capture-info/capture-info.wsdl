@@ -56,6 +56,12 @@
                 </xs:sequence>
             </xs:complexType>
 
+            <xs:complexType name="RequestCallbackUrl">
+                <xs:sequence>
+                    <xs:element name="callbackUrl" type="xs:anyURI" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:complexType>
+
             <xs:complexType name="CaptureInfoExceptionDetails">
                 <xs:sequence>
                     <xs:element name="errorCode" type="xs:int" minOccurs="1" maxOccurs="1"/>
@@ -88,12 +94,16 @@
             <xs:element name="startTransferJob" type="tns:RequestTransferJobId"/>
             <xs:element name="getCaptureJobClipName" type="tns:RequestCaptureJobId"/>
             <xs:element name="setCaptureJobClipName" type="tns:RequestSetCaptureJobClipName"/>
-            <xs:element name="setCaptureJobMetadata" type="tns:RequestSetCaptureJobMetadata"/>
             <xs:element name="getCaptureJobMetadata" type="tns:RequestCaptureJobId"/>
+            <xs:element name="setCaptureJobMetadata" type="tns:RequestSetCaptureJobMetadata"/>
 
             <!-- Loop Recording -->
             <xs:element name="isLoopRecordingEnabled" type="tns:RequestVoid"/>
             <xs:element name="getLoopRecordingVideoFormatId" type="tns:RequestVoid"/>
+
+            <!-- Notifications -->
+            <xs:element name="registerCallbackCaptureJobNotifications" type="tns:RequestCallbackUrl"/>
+            <xs:element name="unregisterCallbackCaptureJobNotifications" type="tns:RequestCallbackUrl"/>
 
             <!-- exceptions -->
             <xs:element name="captureInfoException" type="tns:CaptureInfoExceptionDetails"/>
@@ -173,7 +183,6 @@
                     <xs:element name="return" type="capt:ReferenceSignalStatus" minOccurs="1" maxOccurs="1"/>
                 </xs:sequence>
             </xs:complexType>
-
 
             <!-- response elements -->
             <xs:element name="responseVoid" type="tns:ResponseVoid"/>
@@ -292,6 +301,12 @@
     <message name="getLoopRecordingVideoFormatId">
         <part name="parameters" element="tns:getLoopRecordingVideoFormatId"/>
     </message>
+    <message name="registerCallbackCaptureJobNotifications">
+        <part name="parameters" element="tns:registerCallbackCaptureJobNotifications"/>
+    </message>
+    <message name="unregisterCallbackCaptureJobNotifications">
+        <part name="parameters" element="tns:unregisterCallbackCaptureJobNotifications"/>
+    </message>
 
     <message name="captureInfoException">
         <part name="fault" element="tns:captureInfoException"/>
@@ -393,7 +408,16 @@
             <output message="tns:responseUUID"/>
             <fault name="captureInfoException" message="tns:captureInfoException"/>
         </operation>
-
+        <operation name="registerCallbackCaptureJobNotifications">
+            <input message="tns:registerCallbackCaptureJobNotifications"/>
+            <output message="tns:responseVoid"/>
+            <fault name="captureInfoException" message="tns:captureInfoException"/>
+        </operation>
+        <operation name="unregisterCallbackCaptureJobNotifications">
+            <input message="tns:unregisterCallbackCaptureJobNotifications"/>
+            <output message="tns:responseVoid"/>
+            <fault name="captureInfoException" message="tns:captureInfoException"/>
+        </operation>
     </portType>
     <binding name="CaptureInfoBinding" type="tns:CaptureInfoPort">
         <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
@@ -615,6 +639,30 @@
         </operation>
         <operation name="getLoopRecordingVideoFormatId">
             <soap:operation soapAction="http://capture-info.api.glookast.com/getLoopRecordingVideoFormatId"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="captureInfoException">
+                <soap:fault name="captureInfoException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="registerCallbackCaptureJobNotifications">
+            <soap:operation soapAction="http://capture-info.api.glookast.com/registerCallbackCaptureJobNotifications"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="captureInfoException">
+                <soap:fault name="captureInfoException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="unregisterCallbackCaptureJobNotifications">
+            <soap:operation soapAction="http://capture-info.api.glookast.com/unregisterCallbackCaptureJobNotifications"/>
             <input>
                 <soap:body use="literal"/>
             </input>
