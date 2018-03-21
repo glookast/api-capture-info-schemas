@@ -56,6 +56,18 @@
                 </xs:sequence>
             </xs:complexType>
 
+            <xs:complexType name="RequestEnabled">
+                <xs:sequence>
+                    <xs:element name="enabled" type="xs:boolean" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="RequestVideoFormatId">
+                <xs:sequence>
+                    <xs:element name="videoFormatId" type="base:UUID" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:complexType>
+
             <xs:complexType name="RequestCallbackUrl">
                 <xs:sequence>
                     <xs:element name="callbackUrl" type="xs:anyURI" minOccurs="1" maxOccurs="1"/>
@@ -99,7 +111,10 @@
 
             <!-- Loop Recording -->
             <xs:element name="isLoopRecordingEnabled" type="tns:RequestVoid"/>
+            <xs:element name="setLoopRecordingEnabled" type="tns:RequestEnabled"/>
             <xs:element name="getLoopRecordingVideoFormatId" type="tns:RequestVoid"/>
+            <xs:element name="setLoopRecordingVideoFormatId" type="tns:RequestVideoFormatId"/>
+            <xs:element name="restartChannel" type="tns:RequestVoid"/>
 
             <!-- Notifications -->
             <xs:element name="registerCallbackCaptureJobNotifications" type="tns:RequestCallbackUrl"/>
@@ -298,8 +313,17 @@
     <message name="isLoopRecordingEnabled">
         <part name="parameters" element="tns:isLoopRecordingEnabled"/>
     </message>
+    <message name="setLoopRecordingEnabled">
+        <part name="parameters" element="tns:setLoopRecordingEnabled"/>
+    </message>
     <message name="getLoopRecordingVideoFormatId">
         <part name="parameters" element="tns:getLoopRecordingVideoFormatId"/>
+    </message>
+    <message name="setLoopRecordingVideoFormatId">
+        <part name="parameters" element="tns:setLoopRecordingVideoFormatId"/>
+    </message>
+    <message name="restartChannel">
+        <part name="parameters" element="tns:restartChannel"/>
     </message>
     <message name="registerCallbackCaptureJobNotifications">
         <part name="parameters" element="tns:registerCallbackCaptureJobNotifications"/>
@@ -403,9 +427,24 @@
             <output message="tns:responseBoolean"/>
             <fault name="captureInfoException" message="tns:captureInfoException"/>
         </operation>
+        <operation name="setLoopRecordingEnabled">
+            <input message="tns:setLoopRecordingEnabled"/>
+            <output message="tns:responseVoid"/>
+            <fault name="captureInfoException" message="tns:captureInfoException"/>
+        </operation>
         <operation name="getLoopRecordingVideoFormatId">
             <input message="tns:getLoopRecordingVideoFormatId"/>
             <output message="tns:responseUUID"/>
+            <fault name="captureInfoException" message="tns:captureInfoException"/>
+        </operation>
+        <operation name="setLoopRecordingVideoFormatId">
+            <input message="tns:setLoopRecordingVideoFormatId"/>
+            <output message="tns:responseVoid"/>
+            <fault name="captureInfoException" message="tns:captureInfoException"/>
+        </operation>
+        <operation name="restartChannel">
+            <input message="tns:restartChannel"/>
+            <output message="tns:responseVoid"/>
             <fault name="captureInfoException" message="tns:captureInfoException"/>
         </operation>
         <operation name="registerCallbackCaptureJobNotifications">
@@ -637,8 +676,44 @@
                 <soap:fault name="captureInfoException" use="literal"/>
             </fault>
         </operation>
+        <operation name="setLoopRecordingEnabled">
+            <soap:operation soapAction="http://capture-info.api.glookast.com/setLoopRecordingEnabled"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="captureInfoException">
+                <soap:fault name="captureInfoException" use="literal"/>
+            </fault>
+        </operation>
         <operation name="getLoopRecordingVideoFormatId">
             <soap:operation soapAction="http://capture-info.api.glookast.com/getLoopRecordingVideoFormatId"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="captureInfoException">
+                <soap:fault name="captureInfoException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="setLoopRecordingVideoFormatId">
+            <soap:operation soapAction="http://capture-info.api.glookast.com/setLoopRecordingVideoFormatId"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="captureInfoException">
+                <soap:fault name="captureInfoException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="restartChannel">
+            <soap:operation soapAction="http://capture-info.api.glookast.com/restartChannel"/>
             <input>
                 <soap:body use="literal"/>
             </input>
