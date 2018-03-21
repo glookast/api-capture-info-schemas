@@ -2,24 +2,25 @@
 <definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
              xmlns:xs="http://www.w3.org/2001/XMLSchema"
              xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
-             xmlns:tns="http://capture-info.api.glookast.com"
+             xmlns:tns="http://info.capture.api.glookast.com"
              xmlns:base="http://base.commons.glookast.com"
              xmlns:time="http://timecode.commons.glookast.com"
              name="CaptureInfo"
-             targetNamespace="http://capture-info.api.glookast.com">
+             targetNamespace="http://info.capture.api.glookast.com">
     <types>
-        <xs:schema xmlns:tns="http://capture-info.api.glookast.com"
+        <xs:schema xmlns:tns="http://info.capture.api.glookast.com"
                    xmlns:xs="http://www.w3.org/2001/XMLSchema"
                    xmlns:base="http://base.commons.glookast.com"
                    xmlns:time="http://timecode.commons.glookast.com"
-                   xmlns:capt="http://capture-info.commons.glookast.com"
+                   xmlns:info="http://info.capture.commons.glookast.com"
                    version="1.0"
-                   targetNamespace="http://capture-info.api.glookast.com">
-            <xs:import namespace="http://base.commons.glookast.com" schemaLocation="../../commons/base/base.xsd"/>
+                   targetNamespace="http://info.capture.api.glookast.com">
+            <xs:import namespace="http://base.commons.glookast.com"
+                       schemaLocation="../../../commons/base/base.xsd"/>
             <xs:import namespace="http://timecode.commons.glookast.com"
-                       schemaLocation="../../commons/timecode/timecode.xsd"/>
-            <xs:import namespace="http://capture-info.commons.glookast.com"
-                       schemaLocation="../../commons/capture-info/capture-info.xsd"/>
+                       schemaLocation="../../../commons/timecode/timecode.xsd"/>
+            <xs:import namespace="http://info.capture.commons.glookast.com"
+                       schemaLocation="../../../commons/capture/info/info.xsd"/>
 
             <!-- request wrapper types -->
             <xs:complexType name="RequestVoid"/>
@@ -125,7 +126,7 @@
 
 
             <!-- response wrapper types -->
-            <xs:complexType name="ResponseVoid" />
+            <xs:complexType name="ResponseVoid"/>
 
             <xs:complexType name="ResponseString">
                 <xs:sequence>
@@ -153,13 +154,13 @@
 
             <xs:complexType name="ResponseSignalFormat">
                 <xs:sequence>
-                    <xs:element name="return" type="capt:SignalFormat" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="return" type="info:SignalFormat" minOccurs="1" maxOccurs="1"/>
                 </xs:sequence>
             </xs:complexType>
 
             <xs:complexType name="ResponseListSignalFormat">
                 <xs:sequence>
-                    <xs:element name="return" type="capt:SignalFormat" minOccurs="0" maxOccurs="unbounded"/>
+                    <xs:element name="return" type="info:SignalFormat" minOccurs="0" maxOccurs="unbounded"/>
                 </xs:sequence>
             </xs:complexType>
 
@@ -171,13 +172,13 @@
 
             <xs:complexType name="ResponseListTransferJob">
                 <xs:sequence>
-                    <xs:element name="return" type="capt:TransferJob" minOccurs="0" maxOccurs="unbounded"/>
+                    <xs:element name="return" type="info:TransferJob" minOccurs="0" maxOccurs="unbounded"/>
                 </xs:sequence>
             </xs:complexType>
 
             <xs:complexType name="ResponseTransferJob">
                 <xs:sequence>
-                    <xs:element name="return" type="capt:TransferJob" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="return" type="info:TransferJob" minOccurs="1" maxOccurs="1"/>
                 </xs:sequence>
             </xs:complexType>
 
@@ -195,7 +196,7 @@
 
             <xs:complexType name="ResponseReferenceSignalStatus">
                 <xs:sequence>
-                    <xs:element name="return" type="capt:ReferenceSignalStatus" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="return" type="info:ReferenceSignalStatus" minOccurs="1" maxOccurs="1"/>
                 </xs:sequence>
             </xs:complexType>
 
@@ -461,7 +462,7 @@
     <binding name="CaptureInfoBinding" type="tns:CaptureInfoPort">
         <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
         <operation name="getCurrentSignalFormat">
-            <soap:operation soapAction="http://capture-info.api.glookast.com/getCurrentSignalFormat"/>
+            <soap:operation soapAction="http://info.capture.api.glookast.com/getCurrentSignalFormat"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -473,7 +474,7 @@
             </fault>
         </operation>
         <operation name="getPossibleSignalFormats">
-            <soap:operation soapAction="http://capture-info.api.glookast.com/getPossibleSignalFormats"/>
+            <soap:operation soapAction="http://info.capture.api.glookast.com/getPossibleSignalFormats"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -485,7 +486,7 @@
             </fault>
         </operation>
         <operation name="hasSignal">
-            <soap:operation soapAction="http://capture-info.api.glookast.com/hasSignal"/>
+            <soap:operation soapAction="http://info.capture.api.glookast.com/hasSignal"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -497,7 +498,7 @@
             </fault>
         </operation>
         <operation name="getAvailableBufferSpace">
-            <soap:operation soapAction="http://capture-info.api.glookast.com/getAvailableBufferSpace"/>
+            <soap:operation soapAction="http://info.capture.api.glookast.com/getAvailableBufferSpace"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -509,7 +510,7 @@
             </fault>
         </operation>
         <operation name="getAvailableBufferTime">
-            <soap:operation soapAction="http://capture-info.api.glookast.com/getAvailableBufferTime"/>
+            <soap:operation soapAction="http://info.capture.api.glookast.com/getAvailableBufferTime"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -521,7 +522,7 @@
             </fault>
         </operation>
         <operation name="getTotalBufferSpace">
-            <soap:operation soapAction="http://capture-info.api.glookast.com/getTotalBufferSpace"/>
+            <soap:operation soapAction="http://info.capture.api.glookast.com/getTotalBufferSpace"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -533,7 +534,7 @@
             </fault>
         </operation>
         <operation name="getTotalBufferTime">
-            <soap:operation soapAction="http://capture-info.api.glookast.com/getTotalBufferTime"/>
+            <soap:operation soapAction="http://info.capture.api.glookast.com/getTotalBufferTime"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -545,7 +546,7 @@
             </fault>
         </operation>
         <operation name="getCurrentTimecodes">
-            <soap:operation soapAction="http://capture-info.api.glookast.com/getCurrentTimecodes"/>
+            <soap:operation soapAction="http://info.capture.api.glookast.com/getCurrentTimecodes"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -557,7 +558,7 @@
             </fault>
         </operation>
         <operation name="getTransferJobs">
-            <soap:operation soapAction="http://capture-info.api.glookast.com/getTransferJobs"/>
+            <soap:operation soapAction="http://info.capture.api.glookast.com/getTransferJobs"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -569,7 +570,7 @@
             </fault>
         </operation>
         <operation name="getTransferJobById">
-            <soap:operation soapAction="http://capture-info.api.glookast.com/getTransferJobById"/>
+            <soap:operation soapAction="http://info.capture.api.glookast.com/getTransferJobById"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -581,7 +582,7 @@
             </fault>
         </operation>
         <operation name="getTransferJobsByCaptureJobId">
-            <soap:operation soapAction="http://capture-info.api.glookast.com/getTransferJobsByCaptureJobId"/>
+            <soap:operation soapAction="http://info.capture.api.glookast.com/getTransferJobsByCaptureJobId"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -593,7 +594,7 @@
             </fault>
         </operation>
         <operation name="startTransferJob">
-            <soap:operation soapAction="http://capture-info.api.glookast.com/startTransferJob"/>
+            <soap:operation soapAction="http://info.capture.api.glookast.com/startTransferJob"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -605,7 +606,7 @@
             </fault>
         </operation>
         <operation name="getCaptureJobClipName">
-            <soap:operation soapAction="http://capture-info.api.glookast.com/getCaptureJobClipName"/>
+            <soap:operation soapAction="http://info.capture.api.glookast.com/getCaptureJobClipName"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -617,7 +618,7 @@
             </fault>
         </operation>
         <operation name="setCaptureJobClipName">
-            <soap:operation soapAction="http://capture-info.api.glookast.com/setCaptureJobClipName"/>
+            <soap:operation soapAction="http://info.capture.api.glookast.com/setCaptureJobClipName"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -629,7 +630,7 @@
             </fault>
         </operation>
         <operation name="setCaptureJobMetadata">
-            <soap:operation soapAction="http://capture-info.api.glookast.com/setCaptureJobMetadata"/>
+            <soap:operation soapAction="http://info.capture.api.glookast.com/setCaptureJobMetadata"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -641,7 +642,7 @@
             </fault>
         </operation>
         <operation name="getCaptureJobMetadata">
-            <soap:operation soapAction="http://capture-info.api.glookast.com/getCaptureJobMetadata"/>
+            <soap:operation soapAction="http://info.capture.api.glookast.com/getCaptureJobMetadata"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -653,7 +654,7 @@
             </fault>
         </operation>
         <operation name="getReferenceSignalStatus">
-            <soap:operation soapAction="http://capture-info.api.glookast.com/getReferenceSignalStatus"/>
+            <soap:operation soapAction="http://info.capture.api.glookast.com/getReferenceSignalStatus"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -665,7 +666,7 @@
             </fault>
         </operation>
         <operation name="isLoopRecordingEnabled">
-            <soap:operation soapAction="http://capture-info.api.glookast.com/isLoopRecordingEnabled"/>
+            <soap:operation soapAction="http://info.capture.api.glookast.com/isLoopRecordingEnabled"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -677,7 +678,7 @@
             </fault>
         </operation>
         <operation name="setLoopRecordingEnabled">
-            <soap:operation soapAction="http://capture-info.api.glookast.com/setLoopRecordingEnabled"/>
+            <soap:operation soapAction="http://info.capture.api.glookast.com/setLoopRecordingEnabled"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -689,7 +690,7 @@
             </fault>
         </operation>
         <operation name="getLoopRecordingVideoFormatId">
-            <soap:operation soapAction="http://capture-info.api.glookast.com/getLoopRecordingVideoFormatId"/>
+            <soap:operation soapAction="http://info.capture.api.glookast.com/getLoopRecordingVideoFormatId"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -701,7 +702,7 @@
             </fault>
         </operation>
         <operation name="setLoopRecordingVideoFormatId">
-            <soap:operation soapAction="http://capture-info.api.glookast.com/setLoopRecordingVideoFormatId"/>
+            <soap:operation soapAction="http://info.capture.api.glookast.com/setLoopRecordingVideoFormatId"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -713,7 +714,7 @@
             </fault>
         </operation>
         <operation name="restartChannel">
-            <soap:operation soapAction="http://capture-info.api.glookast.com/restartChannel"/>
+            <soap:operation soapAction="http://info.capture.api.glookast.com/restartChannel"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -725,7 +726,7 @@
             </fault>
         </operation>
         <operation name="registerCallbackCaptureJobNotifications">
-            <soap:operation soapAction="http://capture-info.api.glookast.com/registerCallbackCaptureJobNotifications"/>
+            <soap:operation soapAction="http://info.capture.api.glookast.com/registerCallbackCaptureJobNotifications"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -737,7 +738,7 @@
             </fault>
         </operation>
         <operation name="unregisterCallbackCaptureJobNotifications">
-            <soap:operation soapAction="http://capture-info.api.glookast.com/unregisterCallbackCaptureJobNotifications"/>
+            <soap:operation soapAction="http://info.capture.api.glookast.com/unregisterCallbackCaptureJobNotifications"/>
             <input>
                 <soap:body use="literal"/>
             </input>
