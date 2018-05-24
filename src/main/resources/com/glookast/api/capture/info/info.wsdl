@@ -57,6 +57,13 @@
                 </xs:sequence>
             </xs:complexType>
 
+            <xs:complexType name="RequestSetCaptureJobLocator">
+                <xs:sequence>
+                    <xs:element name="captureJobId" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="locator" type="info:Locator" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:complexType>
+
             <xs:complexType name="RequestEnabled">
                 <xs:sequence>
                     <xs:element name="enabled" type="xs:boolean" minOccurs="1" maxOccurs="1"/>
@@ -124,6 +131,10 @@
             <xs:element name="getLoopRecordingDuration" type="tns:RequestVoid"/>
             <xs:element name="setLoopRecordingDuration" type="tns:RequestDuration"/>
             <xs:element name="restartChannel" type="tns:RequestVoid"/>
+
+            <!-- Locators -->
+            <xs:element name="getCaptureJobLocators" type="tns:RequestCaptureJobId"/>
+            <xs:element name="setCaptureJobLocator" type="tns:RequestSetCaptureJobLocator"/>
 
             <!-- Notifications -->
             <xs:element name="registerCallbackCaptureJobNotifications" type="tns:RequestCallbackUrl"/>
@@ -214,6 +225,12 @@
                 </xs:sequence>
             </xs:complexType>
 
+            <xs:complexType name="ResponseListLocator">
+                <xs:sequence>
+                    <xs:element name="return" type="info:Locator" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:complexType>
+
             <!-- response elements -->
             <xs:element name="responseVoid" type="tns:ResponseVoid"/>
             <xs:element name="responseString" type="tns:ResponseString"/>
@@ -229,6 +246,7 @@
             <xs:element name="responsePropertyList" type="tns:ResponsePropertyList"/>
             <xs:element name="responseTimecodeDuration" type="tns:ResponseTimecodeDuration"/>
             <xs:element name="responseReferenceSignalStatus" type="tns:ResponseReferenceSignalStatus"/>
+            <xs:element name="responseListLocator" type="tns:ResponseListLocator"/>
 
         </xs:schema>
     </types>
@@ -275,6 +293,9 @@
     </message>
     <message name="responseReferenceSignalStatus">
         <part name="parameters" element="tns:responseReferenceSignalStatus"/>
+    </message>
+    <message name="responseListLocator">
+        <part name="parameters" element="tns:responseListLocator"/>
     </message>
 
     <!-- request messages -->
@@ -349,6 +370,12 @@
     </message>
     <message name="restartChannel">
         <part name="parameters" element="tns:restartChannel"/>
+    </message>
+    <message name="getCaptureJobLocators">
+        <part name="parameters" element="tns:getCaptureJobLocators"/>
+    </message>
+    <message name="setCaptureJobLocator">
+        <part name="parameters" element="tns:setCaptureJobLocator"/>
     </message>
     <message name="registerCallbackCaptureJobNotifications">
         <part name="parameters" element="tns:registerCallbackCaptureJobNotifications"/>
@@ -479,6 +506,16 @@
         </operation>
         <operation name="restartChannel">
             <input message="tns:restartChannel"/>
+            <output message="tns:responseVoid"/>
+            <fault name="captureInfoException" message="tns:captureInfoException"/>
+        </operation>
+        <operation name="getCaptureJobLocators">
+            <input message="tns:getCaptureJobLocators"/>
+            <output message="tns:responseListLocator"/>
+            <fault name="captureInfoException" message="tns:captureInfoException"/>
+        </operation>
+        <operation name="setCaptureJobLocator">
+            <input message="tns:setCaptureJobLocator"/>
             <output message="tns:responseVoid"/>
             <fault name="captureInfoException" message="tns:captureInfoException"/>
         </operation>
@@ -773,6 +810,30 @@
         </operation>
         <operation name="restartChannel">
             <soap:operation soapAction="http://info.capture.api.glookast.com/restartChannel"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="captureInfoException">
+                <soap:fault name="captureInfoException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="getCaptureJobLocators">
+            <soap:operation soapAction="http://info.capture.api.glookast.com/getCaptureJobLocators"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="captureInfoException">
+                <soap:fault name="captureInfoException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="setCaptureJobLocator">
+            <soap:operation soapAction="http://info.capture.api.glookast.com/setCaptureJobLocator"/>
             <input>
                 <soap:body use="literal"/>
             </input>
